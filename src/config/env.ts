@@ -1,4 +1,7 @@
+import { config } from 'dotenv';
 import { z } from "zod";
+
+config();
 
 // Esquema de validação
 const envSchema = z.object({

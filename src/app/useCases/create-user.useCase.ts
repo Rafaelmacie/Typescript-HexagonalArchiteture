@@ -17,7 +17,7 @@ export interface CreateUserOutputDTO {
 
 export class CreateUserUseCase {
   // Injeção de dependência do repositório
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(private readonly userRepository: IUserRepository) { }
 
   async execute(input: CreateUserInputDTO): Promise<CreateUserOutputDTO> {
     // Verifica se o usuário já existe
