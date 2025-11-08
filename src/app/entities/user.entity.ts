@@ -35,7 +35,7 @@ export class User {
         id?: string
     ): Promise<User> {
 
-        // 1. Valida e cria os VOs
+        // Valida e cria os VOs
         const idVO = UniqueId.create(id);
         const emailVO = Email.create(props.email);
         const passwordVO = await Password.createAndHash(props.password);
@@ -45,7 +45,7 @@ export class User {
             throw new Error("Name is too short");
         }
 
-        // 2. Monta as 'UserProps' com os VOs
+        // Monta as 'UserProps' com os VOs
         const userProps: UserProps = {
             name: props.name,
             email: emailVO,
@@ -64,6 +64,35 @@ export class User {
         deleted_at?: Date | null
     ): User {
         return new User(props, id, created_at, updated_at, deleted_at);
+    }
+
+    // Método para atualizar o usuário
+    public update(props: { name: string; email: string }): void {
+        // Validação de nome
+        if (props.name.length < 3) {
+            throw new Error("Name is too short");
+        }
+
+        this.props.name = props.name;
+        this.props.email = Email.create(props.email); // Recria o VO para validar
+        this._updated_at = new Date();
+    }
+
+    // Método de soft delete
+    public delete(): void {
+        if (this._deleted_at) {
+            return; // Já está deletado
+        }
+        this._deleted_at = new Date();
+    }
+
+    // Método para restaurar o usuário
+    public restore(): void {
+        if (!this._deleted_at) {
+            return; // Já está ativo
+        }
+        this._deleted_at = null;
+        this._updated_at = new Date();
     }
 
     // Getters que retornam o .value (string) dos VOs

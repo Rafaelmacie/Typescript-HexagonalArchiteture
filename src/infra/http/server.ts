@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import { CreateUserUseCase } from '../../app/useCases/create-user.useCase.js';
 import { TypeOrmUserRepository } from '../database/typeorm/repositories/user.repository.js';
+import { AuthenticateUserUseCase } from '../../app/useCases/auth-user.useCase.js';
 import { ZodError } from 'zod';
 import { env } from '../../config/env.js';
 
@@ -48,6 +49,35 @@ app.post('/users', async (request, reply) => {
             message: 'Internal Server Error',
         });
     }
+});
+
+// --- Rota de Autenticação (Login) ---
+app.post('/sessions', async (request, reply) => {
+  try {
+    const userRepository = new TypeOrmUserRepository();
+    const authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);
+
+    const body = request.body as { email: string; password: string };
+
+    const output = await authenticateUserUseCase.execute(body);
+
+    // Retorna 200 OK com o token e os dados do usuário
+    return reply.status(200).send(output);
+
+  } catch (error) {
+    
+    // Erro de autenticação (401 Unauthorized)
+    if (error instanceof Error && error.message.includes('Invalid')) {
+      return reply.status(401).send({
+        message: error.message,
+      });
+    }
+    
+    // Erro genérico
+    return reply.status(500).send({
+      message: 'Internal Server Error',
+    });
+  }
 });
 
 // --- Lógica de Graceful Shutdown ---

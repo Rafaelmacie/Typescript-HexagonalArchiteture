@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 
 export class Password {
     private _value: string;
@@ -11,6 +11,11 @@ export class Password {
         return this._value;
     }
 
+    // Método para comparar senha (para login)
+    public async compare(plainText: string): Promise<boolean> {
+        return bcrypt.compare(plainText, this._value);
+    }
+
     // Método para criar um novo hash de senha (para novos usuários)
     public static async createAndHash(value: string): Promise<Password> {
         // Regra de negócio: senha deve ter no mínimo 8 caracteres
@@ -18,7 +23,7 @@ export class Password {
             throw new Error("Password must be at least 8 characters long.");
         }
 
-        const hashedPassword = await hash(value, 10);
+        const hashedPassword = await bcrypt.hash(value, 10);
         return new Password(hashedPassword);
     }
 
