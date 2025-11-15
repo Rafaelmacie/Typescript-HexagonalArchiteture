@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { env, isDev } from "../../../config/env.js";
+import { env, isDev, isTest } from "../../../config/env.js";
 import { UserModel } from "./models/user.model.js";
 
 export const AppDataSource = new DataSource({
@@ -9,8 +9,8 @@ export const AppDataSource = new DataSource({
   username: env.DB_USER,
   password: env.DB_PASS,
   database: env.DB_NAME,
-  synchronize: isDev,
-  logging: isDev,
+  synchronize: isDev || isTest,
+  logging: isDev && !isTest,
   entities: [UserModel],
-  migrations: [],
+  migrations: isTest ? [] : ['src/infra/database/typeorm/migrations/*.{ts,js}'],
 });

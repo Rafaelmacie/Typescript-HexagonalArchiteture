@@ -1,4 +1,5 @@
 import fastify from 'fastify';
+import fastifyCors from '@fastify/cors';
 import { CreateUserUseCase } from '../../app/useCases/create-user.useCase.js';
 import { TypeOrmUserRepository } from '../database/typeorm/repositories/user.repository.js';
 import { AuthenticateUserUseCase } from '../../app/useCases/auth-user.useCase.js';
@@ -7,6 +8,10 @@ import { env } from '../../config/env.js';
 
 // Cria a instância do Fastify
 export const app = fastify();
+
+app.register(fastifyCors, {
+  origin: "*",
+});
 
 // --- Definindo a Rota de Criação de Usuário ---
 app.post('/users', async (request, reply) => {
@@ -52,7 +57,7 @@ app.post('/users', async (request, reply) => {
 });
 
 // --- Rota de Autenticação (Login) ---
-app.post('/sessions', async (request, reply) => {
+app.post('/users/sessions', async (request, reply) => {
   try {
     const userRepository = new TypeOrmUserRepository();
     const authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);

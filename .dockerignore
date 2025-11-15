@@ -1,0 +1,20 @@
+# Dependências locais que não devem ser copiadas
+node_modules
+
+# Pasta de build (se houver)
+dist
+
+# Arquivos de ambiente
+.env
+
+# Arquivos Docker
+Dockerfile
+docker-compose.yaml
+docker-compose.test.yaml
+
+# Logs do NPM
+npm-debug.log
+
+# Git
+.git
+.gitignore
