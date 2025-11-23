@@ -16,7 +16,9 @@ import { DeleteTaskUseCase } from '../../app/useCases/tasks/delete-task.useCase.
 export const app = fastify();
 
 app.register(fastifyCors, {
-  origin: "*",
+  origin: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 });
 
 // --- Definindo a Rota de Criação de Usuário ---

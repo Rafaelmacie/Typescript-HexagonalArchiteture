@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ToDo App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="login-box">
+            <h2>Entrar</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="E-mail" required>
+                <input type="password" id="login-password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <span class="link" onclick="toggleForms()">Criar uma conta</span>
+        </div>
+
+        <div id="register-box" class="hidden">
+            <h2>Nova Conta</h2>
+            <form id="register-form">
+                <input type="text" id="reg-name" placeholder="Nome completo" required>
+                <input type="email" id="reg-email" placeholder="E-mail" required>
+                <input type="password" id="reg-password" placeholder="Senha (min 8 chars)" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <span class="link" onclick="toggleForms()">Já tenho conta</span>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>
