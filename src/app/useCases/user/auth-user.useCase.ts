@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import type { IUserRepository } from '../repositories/user.repository.js';
-import { env } from '../../config/env.js';
+import type { IUserRepository } from '../../repositories/user.repository.js';
+import { env } from '../../../config/env.js';
 
 export interface AuthenticateInputDTO {
   email: string;
@@ -17,7 +17,7 @@ export interface AuthenticateOutputDTO {
 }
 
 export class AuthenticateUserUseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(private readonly userRepository: IUserRepository) { }
 
   async execute(input: AuthenticateInputDTO): Promise<AuthenticateOutputDTO> {
     // Valida e encontra o usuário

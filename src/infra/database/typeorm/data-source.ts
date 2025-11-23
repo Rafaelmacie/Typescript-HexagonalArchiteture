@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { env, isDev, isTest } from "../../../config/env.js";
 import { UserModel } from "./models/user.model.js";
+import { TaskModel } from "./models/task.model.js";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,6 +12,6 @@ export const AppDataSource = new DataSource({
   database: env.DB_NAME,
   synchronize: isDev || isTest,
   logging: isDev && !isTest,
-  entities: [UserModel],
+  entities: [UserModel, TaskModel],
   migrations: isTest ? [] : ['src/infra/database/typeorm/migrations/*.{ts,js}'],
 });

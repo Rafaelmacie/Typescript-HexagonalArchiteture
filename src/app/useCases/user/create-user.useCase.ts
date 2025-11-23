@@ -1,5 +1,5 @@
-import { User } from "../entities/user.entity.js";
-import type { IUserRepository } from "../repositories/user.repository.js";
+import { User } from "../../entities/user.entity.js";
+import type { IUserRepository } from "../../repositories/user.repository.js";
 
 // DTO - Data Transfer Objects
 export interface CreateUserInputDTO {

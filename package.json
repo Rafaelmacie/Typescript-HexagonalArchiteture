@@ -9,8 +9,8 @@
     "start": "node dist/main.js",
     "test": "cross-env NODE_ENV=test vitest run",
     "test:app": "cross-env NODE_ENV=test vitest run tests/app",
-    "test:integration": "cross-env NODE_ENV=test vitest run tests/integration",
-    "migration:create": "cross-env NODE_ENV=development node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:create -d src/infra/database/typeorm/data-source.ts",
+    "test:integration": "cross-env NODE_ENV=test vitest run tests/integration --fileParallelism=false",
+    "migration:create": "cross-env NODE_ENV=development node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:create",
     "migration:run": "cross-env NODE_ENV=development node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:run -d src/infra/database/typeorm/data-source.ts",
     "migration:revert": "cross-env NODE_ENV=development node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:revert -d src/infra/database/typeorm/data-source.ts"
   },

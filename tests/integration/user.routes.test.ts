@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 import { app } from '../../src/infra/http/server.js';
 import { AppDataSource } from '../../src/infra/database/typeorm/data-source.js';
-import { UserModel } from '../../src/infra/database/typeorm/models/user.model.js';
 
 // Roda UMA VEZ antes de todos os testes
 beforeAll(async () => {
@@ -17,8 +16,8 @@ afterAll(async () => {
 
 // Roda DEPOIS de CADA teste
 afterEach(async () => {
-  const repository = AppDataSource.getRepository(UserModel);
-  await repository.clear(); // Limpa a tabela 'users'
+  // Limpa com CASCADE para ignorar a FK
+  await AppDataSource.query('TRUNCATE TABLE "users" CASCADE');
 });
 
 describe('User Routes (Integration)', () => {
